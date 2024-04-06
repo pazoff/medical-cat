@@ -1,6 +1,9 @@
 # Medical Cat
 Turn ★ into ⭐ (top-right corner) if you like the project!
 
+[<img src="![image](https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513)
+" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
+
 ## Description
 
 This repository contains a plugin for the [Cheshire cat](https://github.com/cheshire-cat-ai/core) framework, designed to facilitate patient examination and management. The plugin allows users to submit patient examination information through a form, which is then stored in text files. Additionally, the plugin provides functionalities to retrieve diagnosis reports and treatment plans for patients based on the submitted information.
