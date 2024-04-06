@@ -1,7 +1,7 @@
 # Medical Cat
 Turn ★ into ⭐ (top-right corner) if you like the project!
 
-<b>DEMO:</b> click the image to play
+<b>DEMO:</b> click the image below to play
 
 [<img src="https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
 
