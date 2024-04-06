@@ -1,9 +1,7 @@
 # Medical Cat
 Turn ★ into ⭐ (top-right corner) if you like the project!
 
-<b>DEMO:</b> click the image below to play
-
-[<img src="https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
+<img src="https://raw.githubusercontent.com/pazoff/medical-cat/main/medical-cat-logo.jpg" width="50%">
 
 ## Description
 
@@ -14,6 +12,10 @@ This repository contains a plugin for the [Cheshire cat](https://github.com/ches
 The plugin is designed to streamline the patient examination process and improve efficiency in healthcare workflows.
 
 Feel free to use, modify, and contribute to this plugin to meet your specific requirements.
+
+## <b>DEMO:</b> click the image below to play the demo
+
+[<img src="https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
 
 # User Guide: Using the Plugin for Patient Examination
 
