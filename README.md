@@ -27,6 +27,8 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 - You can interact with the agent using specific commands prefixed with '@'.
 - To request a diagnosis report for a patient, type `@diagnosis <patient_name>`, where `<patient_name>` is the name of the patient you want the diagnosis for.
 - To request a treatment plan for a patient, type `@treatment <patient_name>`, where `<patient_name>` is the name of the patient you want the treatment plan for.
+
+  <b>(before making treatment request a proper diagnosis should be rulled out and should be filled by the doctor in patient_name.txt file in /app/cat/data/ folder!)</b>
 - The agent will generate a response based on the requested information, using the data stored in the corresponding patient file.
 
 ## 4. Understanding Agent Responses:
@@ -34,8 +36,6 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 - If the file is found, the agent will read the patient's information and generate an appropriate response.
 - For diagnosis requests, the response will include the patient's information, followed by the differential diagnosis and an investigation plan.
 - For treatment requests, the response will include the patient's information, the treatment plan, and information on drugs and doses.
-
-  <b>(before making treatment request a proper diagnosis should be rulled out and should be filled by the doctor in patient_name.txt file in /app/cat/data/ folder!)</b>
 
 ## 5. Error Handling:
 - If the agent cannot find the patient's file based on the provided name, it will return an error message indicating that the file was not found.
