@@ -21,6 +21,7 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 - If the file is found, the agent will read the patient's information and generate an appropriate response.
 - For diagnosis requests, the response will include the patient's information, followed by the differential diagnosis and an investigation plan.
 - For treatment requests, the response will include the patient's information, the treatment plan, and information on drugs and doses.
+(before making treatment request a proper diagnosis should be rulled out and should be filled by the doctor in patient_name.txt file in /app/cat/data/ folder!)
 
 ## 5. Error Handling:
 - If the agent cannot find the patient's file based on the provided name, it will return an error message indicating that the file was not found.
