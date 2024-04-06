@@ -5,6 +5,8 @@ Turn ★ into ⭐ (top-right corner) if you like the project!
 
 This repository contains a plugin for the [Cheshire cat](https://github.com/cheshire-cat-ai/core) framework, designed to facilitate patient examination and management. The plugin allows users to submit patient examination information through a form, which is then stored in text files. Additionally, the plugin provides functionalities to retrieve diagnosis reports and treatment plans for patients based on the submitted information.
 
+<b>This plugin can help you rule out a patient diagnosis and then create a treatment plan for the patient with medications and dosage.</b>
+
 The plugin is designed to streamline the patient examination process and improve efficiency in healthcare workflows.
 
 Feel free to use, modify, and contribute to this plugin to meet your specific requirements.
