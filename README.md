@@ -9,6 +9,8 @@ This repository contains a plugin for the [Cheshire cat](https://github.com/ches
 
 <b>This plugin can help you rule out a patient diagnosis and then create a treatment plan for the patient with medications and dosage.</b>
 
+<b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes.
+
 The plugin is designed to streamline the patient examination process and improve efficiency in healthcare workflows.
 
 Feel free to use, modify, and contribute to this plugin to meet your specific requirements.
