@@ -1,9 +1,9 @@
 {
     "name": "Medical Cat",
-    "description": "A medical expert - diagnosis reports and treatment plans for patients - Guide - https://github.com/pazoff/medical-cat/blob/main/medical-cat-guide.txt",
+    "description": "A medical expert - diagnosis reports and treatment plans for patients. Disclaimer: This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes.",
     "author_name": "Pazoff",
     "tags": "medical,expert,diagnosis,treatment-plan,patient data-management",
     "plugin_url": "https://github.com/pazoff/medical-cat",
     "thumb": "https://raw.githubusercontent.com/pazoff/medical-cat/main/medical-cat-logo.jpg",
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
