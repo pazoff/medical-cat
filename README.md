@@ -29,6 +29,7 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 - Make sure to have the appropriate permissions to access and modify files in the designated directory (`/app/cat/data/` in this case).
 
 ## 2. Form Submission:
+- To get a list of the available commands type <b>@medcat</b>
 - Begin by initiating the patient examination process. You can start by typing phrases like "begin patient examination" or "start patient assessment."
 - Fill out the form with relevant patient information including name, age, sex, complaints, etc.
 - Upon completion, submit the form. The submitted data will be saved to a text file named after the patient.
