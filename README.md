@@ -36,6 +36,7 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 
 ## 3. Interacting with the Agent:
 - You can interact with the agent using specific commands prefixed with '@'.
+- To get a list of the available commands type `@medcat`
 - To request a diagnosis report for a patient, type `@diagnosis <patient_name>`, where `<patient_name>` is the name of the patient you want the diagnosis for.
 - To request a treatment plan for a patient, type `@treatment <patient_name>`, where `<patient_name>` is the name of the patient you want the treatment plan for.
 
