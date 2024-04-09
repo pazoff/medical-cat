@@ -1,6 +1,6 @@
 {
     "name": "Medical Cat",
-    "description": "A medical expert - diagnosis reports and treatment plans for patients. Disclaimer: This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes.",
+    "description": "A medical expert - diagnosis reports and treatment plans for patients. Disclaimer: This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise.",
     "author_name": "Pazoff",
     "tags": "medical,expert,diagnosis,treatment-plan,patient data-management",
     "plugin_url": "https://github.com/pazoff/medical-cat",
