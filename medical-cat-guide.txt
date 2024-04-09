@@ -42,4 +42,4 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 - Protect patient data stored in the designated directory and follow best practices for data security and privacy.
 
 Following these steps will enable you to effectively use the plugin for patient examination and management, streamlining the process and improving efficiency in healthcare workflows.
-Disclaimer: This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes.
+Disclaimer: This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise.
