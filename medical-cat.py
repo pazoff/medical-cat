@@ -153,7 +153,7 @@ def agent_fast_reply(fast_reply, cat):
     if message.startswith('@medcat'):
         # Output to the user the list of the commands of the plugin
         return {
-            "output": f"<b>Welcome to Medical Cat</b> <br><br> Type: <b>@patient patient_name</b> to get patient information<br>Type: <b>@diagnosis patient_name</b> to get differantial diagnosis and investigations<br>Type: <b>@treatment patient_name</b> to get treatment plan and medications dosage<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
+            "output": f"<b>Welcome to Medical Cat</b> <br><br> Type: <b>@patient patient_name</b> to get patient information<br>Type: <b>@diagnosis patient_name</b> to get differantial diagnosis and investigations<br>Type: <b>@treatment patient_name</b> to get treatment plan and medications dosage<br><br>You can learn more about how to use Medical Cat plugin in the <a href='https://github.com/pazoff/medical-cat?tab=readme-ov-file#user-guide-using-the-plugin-for-patient-examination' target='_blank'>User Guide</a><br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
 
     return None
