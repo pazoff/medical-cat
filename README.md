@@ -19,6 +19,8 @@ Feel free to use, modify, and contribute to this plugin to meet your specific re
 
 [<img src="https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
 
+[DEMO](https://www.youtube.com/watch?v=DTJKZLaZC_Y)
+
 # User Guide: Using the Plugin for Patient Examination
 
 Welcome to the user guide for the plugin designed to assist in patient examination and management. This guide will walk you through the steps of using the plugin effectively.
