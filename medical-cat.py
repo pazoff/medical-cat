@@ -103,7 +103,7 @@ def agent_fast_reply(fast_reply, cat):
         
         content = read_patient_info(file_name)
         if content is None:
-            return {"output": f"Diagnosis file not found for {patient_name}"}
+            return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
         cat.send_ws_message(content=f'Creating differantial diagnosis ... ', msg_type='chat_token')
         llm_diagnosis = cat.llm(f"What are the most probable differantial diagnosis based on patient information: {content}")
@@ -123,7 +123,7 @@ def agent_fast_reply(fast_reply, cat):
         
         content = read_patient_info(file_name)
         if content is None:
-            return {"output": f"Diagnosis file not found for {patient_name}"}
+            return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
         cat.send_ws_message(content=f'Creating a treatment plan ... ', msg_type='chat_token')
         llm_treatment_plan = cat.llm(f"Create a treatment plan with medications and/or other options based: {content}")
@@ -143,10 +143,10 @@ def agent_fast_reply(fast_reply, cat):
         
         content = read_patient_info(file_name)
         if content is None:
-            return {"output": f"Diagnosis file not found for {patient_name}"}
+            return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
         result = {
-            "output": f"{patient_info}"
+            "output": f"{patient_info}<br><br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
         return result
     
