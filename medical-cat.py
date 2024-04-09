@@ -74,7 +74,7 @@ class PatientExaminationForm(CatForm):
             for key, value in form_data.items():
                 file.write(f"{key}: {value}\n")
         return {
-            "output": f"Patient examination information for {patient_name} saved to {file_name} <br><br> Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}"
+            "output": f"Patient examination information for {patient_name} saved to {file_name} <br><br> Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes."
         }
 
 
