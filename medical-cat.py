@@ -15,6 +15,7 @@ class PresentIllness(BaseModel):
     patient_age: int
     patient_sex: str
     patient_complaint: str
+    current_symptoms: List[str]
     symptoms_onset: str
     symptoms_duration: str
     general_appearance: str
@@ -74,14 +75,21 @@ class PatientExaminationForm(CatForm):
             for key, value in form_data.items():
                 file.write(f"{key}: {value}\n")
         return {
-            "output": f"Patient examination information for {patient_name} saved to {file_name} <br><br> Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
+            "output": f"Patient examination information for {patient_name} saved to {file_name} <br><br> Type: <b>@patient {patient_name}</b> to get patient information<br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
 
+def read_patient_info(p_file_name):
+    try:
+        with open(p_file_name, 'r') as file:
+            content = file.read()
+            return content
+    except FileNotFoundError:
+        return None
+    
 
 @hook
 def agent_fast_reply(fast_reply, cat):
     return_direct = True
-    global alert_thread
 
     # Get user message from the working memory
     message = cat.working_memory["user_message_json"]["text"]
@@ -93,26 +101,19 @@ def agent_fast_reply(fast_reply, cat):
         # Construct filename based on patient's name
         file_name = f"/app/cat/data/{patient_name}.txt"
         
-        # Read content from the file
-        try:
-            with open(file_name, 'r') as file:
-                content = file.read()
-                patient_info = f"Patient information: \n {content}"
-                cat.send_ws_message(content=f'Creating differantial diagnosis ... ', msg_type='chat_token')
-                llm_diagnosis = cat.llm(f"What are the most probable differantial diagnosis based on patient information: {content}")
-                cat.send_ws_message(content=f'Creating investigations plan ... ', msg_type='chat_token')
-                llm_investigation_plan = cat.llm(f"Create investigations plan to rule out differantial diagnosis: {llm_diagnosis}")
-                #cat.send_ws_message(content=f'Creating treatment plan ... ', msg_type='chat_token')
-                #llm_treatment_plan = cat.llm(f"Create a treatment plan with medications and/or other options based on differantial diagnosis: {llm_diagnosis}")
-                #cat.send_ws_message(content=f'Evaluating drugs and doses ... ', msg_type='chat_token')
-                #llm_drugs_and_doses = cat.llm(f"What drugs and doses should be taken based on treatment plan: {llm_treatment_plan}. Create a table with the following format: Drug Name | Dosage | Side Effects. If there are no medications, just say 'No medications needed'.")
-                result = {
-                    "output": f"{patient_info} \n<br><br> {llm_diagnosis} \n<br><br> {llm_investigation_plan}"
-                }
-            return result
-        except FileNotFoundError:
+        content = read_patient_info(file_name)
+        if content is None:
             return {"output": f"Diagnosis file not found for {patient_name}"}
-    
+        patient_info = f"<b>Patient information:</b> \n {content}"
+        cat.send_ws_message(content=f'Creating differantial diagnosis ... ', msg_type='chat_token')
+        llm_diagnosis = cat.llm(f"What are the most probable differantial diagnosis based on patient information: {content}")
+        cat.send_ws_message(content=f'Creating investigations plan ... ', msg_type='chat_token')
+        llm_investigation_plan = cat.llm(f"Create investigations plan to rule out differantial diagnosis: {llm_diagnosis}")
+        result = {
+            "output": f"{patient_info} \n<br><br> {llm_diagnosis} \n<br><br> {llm_investigation_plan}"
+        }
+        return result
+        
     if message.startswith('@treatment'):
         # Extract patient's name from the message
         patient_name = message[len('@treatment'):].strip()
@@ -120,20 +121,39 @@ def agent_fast_reply(fast_reply, cat):
         # Construct filename based on patient's name
         file_name = f"/app/cat/data/{patient_name}.txt"
         
-        # Read content from the file
-        try:
-            with open(file_name, 'r') as file:
-                content = file.read()
-                patient_info = f"Patient information: \n {content}"
-                cat.send_ws_message(content=f'Creating treatment plan ... ', msg_type='chat_token')
-                llm_treatment_plan = cat.llm(f"Create a treatment plan with medications and/or other options based: {content}")
-                cat.send_ws_message(content=f'Evaluating drugs and doses ... ', msg_type='chat_token')
-                llm_drugs_and_doses = cat.llm(f"What drugs and doses should be taken based on treatment plan: {llm_treatment_plan}. Create a table with the following format: Drug Name | Dosage | Side Effects. If there are no medications, just say 'No medications needed'.")
-                result = {
-                    "output": f"{patient_info} \n<br><br> {llm_treatment_plan} \n<br><br> {llm_drugs_and_doses}"
-                }
-            return result
-        except FileNotFoundError:
+        content = read_patient_info(file_name)
+        if content is None:
             return {"output": f"Diagnosis file not found for {patient_name}"}
+        patient_info = f"<b>Patient information:</b> \n {content}"
+        cat.send_ws_message(content=f'Creating a treatment plan ... ', msg_type='chat_token')
+        llm_treatment_plan = cat.llm(f"Create a treatment plan with medications and/or other options based: {content}")
+        cat.send_ws_message(content=f'Evaluating medications and their dosages ... ', msg_type='chat_token')
+        llm_drugs_and_doses = cat.llm(f"What medications should be taken based on the treatment plan: {llm_treatment_plan}. Create a table with medications, dosage, frequency and side Effects. If there are no medications, just say 'No medications needed'.")
+        result = {
+            "output": f"{patient_info} \n<br><br> {llm_treatment_plan} \n<br><br> {llm_drugs_and_doses}"
+        }
+        return result
+    
+    if message.startswith('@patient'):
+        # Extract patient's name from the message
+        patient_name = message[len('@patient'):].strip()
+
+        # Construct filename based on patient's name
+        file_name = f"/app/cat/data/{patient_name}.txt"
+        
+        content = read_patient_info(file_name)
+        if content is None:
+            return {"output": f"Diagnosis file not found for {patient_name}"}
+        patient_info = f"<b>Patient information:</b> \n {content}"
+        result = {
+            "output": f"{patient_info}"
+        }
+        return result
+    
+    if message.startswith('@medcat'):
+        # Output to the user the list of the commands of the plugin
+        return {
+            "output": f"<b>Welcome to Medical Cat</b> <br><br> Type: <b>@patient patient_name</b> to get patient information<br>Type: <b>@diagnosis patient_name</b> to get differantial diagnosis and investigations<br>Type: <b>@treatment patient_name</b> to get treatment plan and medications dosage<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
+        }
 
     return None
