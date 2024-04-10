@@ -92,6 +92,19 @@ def read_patient_info(p_file_name):
             return content
     except FileNotFoundError:
         return None
+
+def save_file_with_patient_name(patient_name, content, descriptor):
+    patient_dir = os.path.join(medical_cat_dir, patient_name)
+    try:
+        if not os.path.exists(patient_dir):
+            os.makedirs(patient_dir)
+
+        file_path = os.path.join(patient_dir, f"{patient_name}_{descriptor}.txt")
+        with open(file_path, 'w') as file:
+            file.write(content)
+        return True, file_path  # Indicate success and return the file path
+    except Exception as e:
+        return False, str(e)  # Indicate failure and return the error message
     
 
 @hook
@@ -117,6 +130,9 @@ def agent_fast_reply(fast_reply, cat):
         llm_diagnosis = cat.llm(f"What are the most probable differantial diagnosis based on patient information: {content}")
         cat.send_ws_message(content=f'Creating investigations plan ... ', msg_type='chat_token')
         llm_investigation_plan = cat.llm(f"Create investigations plan to rule out differantial diagnosis: {llm_diagnosis}")
+
+        save_file_with_patient_name(patient_name, llm_diagnosis + "\n\n" + llm_investigation_plan + "\n\n", 'differantial_diagnosis_and_investigations_plan')
+        
         result = {
             "output": f"{patient_info} \n<br><br> {llm_diagnosis} \n<br><br> {llm_investigation_plan}"
         }
@@ -138,6 +154,9 @@ def agent_fast_reply(fast_reply, cat):
         llm_treatment_plan = cat.llm(f"Create a treatment plan with medications and/or other options based: {content}")
         cat.send_ws_message(content=f'Evaluating medications and their dosages ... ', msg_type='chat_token')
         llm_drugs_and_doses = cat.llm(f"What medications should be taken based on the treatment plan: {llm_treatment_plan}. Create a table with medications, dosage, frequency and side Effects. If there are no medications, just say 'No medications needed'.")
+        
+        save_file_with_patient_name(patient_name, llm_treatment_plan + "\n\n" + llm_drugs_and_doses + "\n\n", 'treatment_plan_and_drugs_and_doses')
+
         result = {
             "output": f"{patient_info} \n<br><br> {llm_treatment_plan} \n<br><br> {llm_drugs_and_doses}"
         }
@@ -155,8 +174,17 @@ def agent_fast_reply(fast_reply, cat):
         if content is None:
             return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
+
+        patient_differantial_diagnosis_and_investigations_plan = read_patient_info(os.path.join(patient_dir, f'{patient_name}_differantial_diagnosis_and_investigations_plan.txt'))
+        if patient_differantial_diagnosis_and_investigations_plan is None:
+            patient_differantial_diagnosis_and_investigations_plan = "<li>Differantial diagnosis and investigations plan not found"
+        
+        patinet_treatment_plan_and_drugs_and_doses = read_patient_info(os.path.join(patient_dir, f'{patient_name}_treatment_plan_and_drugs_and_doses.txt'))
+        if patinet_treatment_plan_and_drugs_and_doses is None:
+            patinet_treatment_plan_and_drugs_and_doses = "<li>Treatment plan and drugs and doses not found"
+
         result = {
-            "output": f"{patient_info}<br><br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
+            "output": f"{patient_info}<br><br>{patient_differantial_diagnosis_and_investigations_plan}<br><br>{patinet_treatment_plan_and_drugs_and_doses}<br><br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
         return result
     
