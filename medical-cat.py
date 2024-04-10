@@ -131,7 +131,7 @@ def agent_fast_reply(fast_reply, cat):
         cat.send_ws_message(content=f'Creating investigations plan ... ', msg_type='chat_token')
         llm_investigation_plan = cat.llm(f"Create investigations plan to rule out differantial diagnosis: {llm_diagnosis}")
 
-        save_file_with_patient_name(patient_name, llm_diagnosis + "\n\n" + llm_investigation_plan + "\n\n", 'differantial_diagnosis_and_investigations_plan')
+        save_file_with_patient_name(patient_name, llm_diagnosis + "\n\n<br>\n" + llm_investigation_plan + "\n\n", 'differantial_diagnosis_and_investigations_plan')
         
         result = {
             "output": f"{patient_info} \n<br><br> {llm_diagnosis} \n<br><br> {llm_investigation_plan}"
@@ -155,7 +155,7 @@ def agent_fast_reply(fast_reply, cat):
         cat.send_ws_message(content=f'Evaluating medications and their dosages ... ', msg_type='chat_token')
         llm_drugs_and_doses = cat.llm(f"What medications should be taken based on the treatment plan: {llm_treatment_plan}. Create a table with medications, dosage, frequency and side Effects. If there are no medications, just say 'No medications needed'.")
         
-        save_file_with_patient_name(patient_name, llm_treatment_plan + "\n\n" + llm_drugs_and_doses + "\n\n", 'treatment_plan_and_drugs_and_doses')
+        save_file_with_patient_name(patient_name, llm_treatment_plan + "\n\n<br>\n" + llm_drugs_and_doses + "\n\n", 'treatment_plan_and_drugs_and_doses')
 
         result = {
             "output": f"{patient_info} \n<br><br> {llm_treatment_plan} \n<br><br> {llm_drugs_and_doses}"
