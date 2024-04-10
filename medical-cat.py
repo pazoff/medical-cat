@@ -27,7 +27,7 @@ class PresentIllness(BaseModel):
     # alleviating_factors: Optional[str]
 
     # present_conditions: List[str]
-    # past_medical_history: List[str]
+    past_medical_history: List[str]
     # surgical_history: List[str]
     # injuries: List[str]
     # family_history: List[str]
@@ -43,9 +43,9 @@ class PresentIllness(BaseModel):
 
     # possible_conditions: List[str]
 
-    # laboratory_tests: List[str]
-    # imaging_studies: List[str]
-    # other_studies: List[str]
+    laboratory_tests: List[str]
+    imaging_studies: List[str]
+    other_studies: List[str]
 
     #diagnosis: str
     # treatment_options: List[str]
