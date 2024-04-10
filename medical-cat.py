@@ -4,6 +4,9 @@ from typing import List, Optional
 from enum import Enum
 from cat.mad_hatter.decorators import tool, hook, plugin
 from cat.log import log
+import os
+
+medical_cat_dir = "/app/cat/data/medcat"
 
 class SymptomSeverity(Enum):
     MILD = 'mild'
@@ -70,12 +73,16 @@ class PatientExaminationForm(CatForm):
 
     def submit(self, form_data):
         patient_name = form_data.get('patient_name', 'Unknown')
-        file_name = f"/app/cat/data/{patient_name}.txt"
-        with open(file_name, 'w') as file:
+        patient_dir = os.path.join(medical_cat_dir, patient_name)
+        if not os.path.exists(patient_dir):
+            os.makedirs(patient_dir)
+
+        patient_file = os.path.join(patient_dir, f"{patient_name}.txt")
+        with open(patient_file, 'w') as file:
             for key, value in form_data.items():
                 file.write(f"{key}: {value}\n")
         return {
-            "output": f"Patient examination information for {patient_name} saved to {file_name} <br><br> Type: <b>@patient {patient_name}</b> to get patient information<br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
+            "output": f"Patient examination information for {patient_name} saved to {patient_file} <br><br> Type: <b>@patient {patient_name}</b> to get patient information<br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
 
 def read_patient_info(p_file_name):
@@ -97,11 +104,12 @@ def agent_fast_reply(fast_reply, cat):
     if message.startswith('@diagnosis'):
         # Extract patient's name from the message
         patient_name = message[len('@diagnosis'):].strip()
+        patient_dir = os.path.join(medical_cat_dir, patient_name)
 
         # Construct filename based on patient's name
-        file_name = f"/app/cat/data/{patient_name}.txt"
+        patient_file = os.path.join(patient_dir, f"{patient_name}.txt")
         
-        content = read_patient_info(file_name)
+        content = read_patient_info(patient_file)
         if content is None:
             return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
@@ -117,11 +125,12 @@ def agent_fast_reply(fast_reply, cat):
     if message.startswith('@treatment'):
         # Extract patient's name from the message
         patient_name = message[len('@treatment'):].strip()
+        patient_dir = os.path.join(medical_cat_dir, patient_name)
 
         # Construct filename based on patient's name
-        file_name = f"/app/cat/data/{patient_name}.txt"
+        patient_file = os.path.join(patient_dir, f"{patient_name}.txt")
         
-        content = read_patient_info(file_name)
+        content = read_patient_info(patient_file)
         if content is None:
             return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
@@ -137,11 +146,12 @@ def agent_fast_reply(fast_reply, cat):
     if message.startswith('@patient'):
         # Extract patient's name from the message
         patient_name = message[len('@patient'):].strip()
+        patient_dir = os.path.join(medical_cat_dir, patient_name)
 
         # Construct filename based on patient's name
-        file_name = f"/app/cat/data/{patient_name}.txt"
+        patient_file = os.path.join(patient_dir, f"{patient_name}.txt")
         
-        content = read_patient_info(file_name)
+        content = read_patient_info(patient_file)
         if content is None:
             return {"output": f"Medical file not found for {patient_name}"}
         patient_info = f"<b>Patient information:</b> \n {content}"
