@@ -5,6 +5,7 @@ from enum import Enum
 from cat.mad_hatter.decorators import tool, hook, plugin
 from cat.log import log
 import os
+import datetime
 
 medical_cat_dir = "/app/cat/data/medcat"
 
@@ -107,6 +108,22 @@ def save_file_with_patient_name(patient_name, content, descriptor):
         return False, str(e)  # Indicate failure and return the error message
     
 
+def get_last_updated_time(file_path):
+    try:
+        # Get the last modified time in seconds since the epoch
+        last_modified_time = os.path.getmtime(file_path)
+        
+        # Convert the time to a datetime object
+        last_updated_time = datetime.datetime.fromtimestamp(last_modified_time)
+        
+        # Format the datetime object as a string
+        return last_updated_time.strftime('%Y-%m-%d %H:%M:%S')
+    
+    except Exception:
+        # Return an empty string in case of an exception
+        return ''
+    
+
 @hook
 def agent_fast_reply(fast_reply, cat):
     return_direct = True
@@ -173,16 +190,22 @@ def agent_fast_reply(fast_reply, cat):
         content = read_patient_info(patient_file)
         if content is None:
             return {"output": f"Medical file not found for {patient_name}"}
-        patient_info = f"<b>Patient information:</b> \n {content}"
+        else:
+            content_updated_time = get_last_updated_time(patient_file)
+
+        patient_info = f"<b>Patient information:</b> <br><br> {content} <br> <small>Last updated: {content_updated_time}</small>"
 
         patient_differantial_diagnosis_and_investigations_plan = read_patient_info(os.path.join(patient_dir, f'{patient_name}_differantial_diagnosis_and_investigations_plan.txt'))
         if patient_differantial_diagnosis_and_investigations_plan is None:
             patient_differantial_diagnosis_and_investigations_plan = "<li>Differantial diagnosis and investigations plan not found"
+        else:
+            patient_differantial_diagnosis_and_investigations_plan = f"{patient_differantial_diagnosis_and_investigations_plan} <br> <small>Last updated: {get_last_updated_time(os.path.join(patient_dir, f'{patient_name}_differantial_diagnosis_and_investigations_plan.txt'))}</small>"
         
         patinet_treatment_plan_and_drugs_and_doses = read_patient_info(os.path.join(patient_dir, f'{patient_name}_treatment_plan_and_drugs_and_doses.txt'))
         if patinet_treatment_plan_and_drugs_and_doses is None:
             patinet_treatment_plan_and_drugs_and_doses = "<li>Treatment plan and drugs and doses not found"
-
+        else:
+            patinet_treatment_plan_and_drugs_and_doses = f"{patinet_treatment_plan_and_drugs_and_doses} <br> <small>Last updated: {get_last_updated_time(os.path.join(patient_dir, f'{patient_name}_treatment_plan_and_drugs_and_doses.txt'))}</small>"
         result = {
             "output": f"{patient_info}<br><br>{patient_differantial_diagnosis_and_investigations_plan}<br><br>{patinet_treatment_plan_and_drugs_and_doses}<br><br>Type: <b>@diagnosis {patient_name}</b> to get differantial diagnosis and investigations plan for {patient_name}<br>Type: <b>@treatment {patient_name}</b> to get treatment plan and medications dosage for {patient_name}<br><br><b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise."
         }
