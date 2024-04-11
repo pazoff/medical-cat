@@ -70,3 +70,23 @@ Welcome to the user guide for the plugin designed to assist in patient examinati
 Following these steps will enable you to effectively use the plugin for patient examination and management, streamlining the process and improving efficiency in healthcare workflows.
 
 <b>Disclaimer:</b> This software is exclusively intended for use by medical professionals and should not be utilized for self-treatment purposes; furthermore, please note that information provided by AI may not be 100% accurate and should be cross-referenced with professional medical expertise.
+
+<b>Meaning</b>
+
+This software is designed to assist medical professionals in patient care. It is not intended to replace the judgment and expertise of a qualified healthcare provider.
+
+<b>Information Accuracy</b>
+
+The information provided by the software is not guaranteed to be 100% accurate. It is important to cross-reference the information with other sources, including professional medical expertise, to ensure accuracy.
+
+<b>Consequences of Self-Treatment</b>
+
+Self-treatment can be dangerous and may lead to adverse outcomes. It is essential to consult with a qualified healthcare provider before making any decisions about your health or treatment.
+
+<b>Responsibility of Healthcare Providers</b>
+
+Healthcare providers are responsible for using the software appropriately and in conjunction with their own professional judgment. They are also responsible for informing patients about the limitations of the software and the importance of seeking professional medical advice.
+
+<b>Overall</b>
+
+This disclaimer serves as a reminder that the software is a tool to assist medical professionals, not a substitute for their expertise. It is important to use the software responsibly and in conjunction with other sources of information to ensure patient safety and optimal outcomes.
