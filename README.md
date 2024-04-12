@@ -19,6 +19,8 @@ Feel free to use, modify, and contribute to this plugin to meet your specific re
 
 [<img src="https://github.com/pazoff/medical-cat/assets/28357700/aa405a70-8e09-4824-afef-e798422a6513" width="50%">](https://youtu.be/DTJKZLaZC_Y "Medical Cat Workflow")
 
+<b>Google Gemini pro 1.0</a> was used as a LLM for interactions in this video
+
 [DEMO](https://www.youtube.com/watch?v=DTJKZLaZC_Y)
 
 # User Guide: Using the Plugin for Patient Examination
